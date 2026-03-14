@@ -669,6 +669,14 @@ main {
   vertical-align: middle;
 }
 
+.lb-table tbody td {
+  text-align: left;
+}
+
+.lb-table tbody tr td {
+  height: 88px;
+}
+
 .lb-table tbody tr {
   transition: background 0.2s;
 }
@@ -686,8 +694,23 @@ main {
   text-align: center;
 }
 
+.rank-cell {
+  width: 80px;
+  text-align: center;
+}
+
 .th-player {
   text-align: left;
+}
+
+.player-cell {
+  padding-right: 1.5rem;
+}
+
+.player-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .th-elo {
@@ -711,12 +734,6 @@ main {
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
-.player-cell {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
 .lb-avatar .avatar-placeholder {
   width: 40px;
   height: 40px;
@@ -737,12 +754,22 @@ main {
 }
 
 .elo-cell {
-  font-weight: 800;
-  font-size: 1.1rem;
   font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.elo-content {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  min-height: 56px;
+}
+
+.elo-value {
+  font-weight: 800;
+  font-size: 1.1rem;
+  line-height: 1.1;
 }
 
 .elo-diff {
@@ -755,6 +782,9 @@ main {
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--text-muted);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 /* Highlighting top 3 */

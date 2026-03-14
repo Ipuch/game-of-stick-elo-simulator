@@ -30,6 +30,24 @@ const INITIAL_PLAYERS = [
 
 Push to `main` — the GitHub Actions workflow deploys the `public/` directory automatically to GitHub Pages.
 
+## Run locally (localhost:8000)
+
+This project is a static site — you can serve the `public/` folder with any static file server. Example commands:
+
+1) Python 3 (built-in):
+
+```bash
+python3 -m http.server 8000 --directory public
+```
+
+2) Node (serve package):
+
+```bash
+npx serve public -l 8000
+```
+
+Then open http://localhost:8000 in your browser.
+
 ## Tech stack
 
 - Pure HTML + Vanilla JS + Vanilla CSS

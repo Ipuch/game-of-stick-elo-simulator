@@ -186,16 +186,20 @@ function renderLeaderboard(players, matches) {
 
         return `
       <tr>
-        <td class="th-rank"><span class="rank-medal">${medal}</span></td>
+        <td class="rank-cell"><span class="rank-medal">${medal}</span></td>
         <td class="player-cell">
-          <span class="lb-avatar">${renderAvatar(p)}</span>
-          <span class="lb-name">${p.name}</span>
+          <div class="player-content">
+            <span class="lb-avatar">${renderAvatar(p)}</span>
+            <span class="lb-name">${p.name}</span>
+          </div>
         </td>
         <td class="elo-cell">
-          ${p.elo}
-          ${diffHtml}
+          <div class="elo-content">
+            <span class="elo-value">${p.elo}</span>
+            ${diffHtml}
+          </div>
         </td>
-        <td class="th-stats stats-cell">
+        <td class="stats-cell">
           <span class="stat-w">${p.wins}</span> - 
           <span class="stat-l">${p.losses}</span> - 
           <span class="stat-d">${p.draws}</span>
