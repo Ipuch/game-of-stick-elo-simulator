@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>ELO Battle 🥋</title>
+  <meta name="description"
+    content="Rank 20 players head-to-head with the ELO rating system. Vote on matchups and watch the leaderboard update in real time." />
+
+  <!-- Modern Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <!-- Background ambiance -->
+  <div class="ambient-glow" id="ambient-glow"></div>
+
+  <!-- ═════════ HEADER / TABS ═════════ -->
+  <!-- ═════════ HEADER / TABS ═════════ -->
+  <header id="main-header" style="display: none;">
+    <div class="header-content">
+      <nav class="tabs" aria-label="Views">
+        <button class="tab-btn active" data-tab="battle" aria-controls="view-battle">
+          <i class="fa-solid fa-fire"></i> <span>Battle</span>
+        </button>
+        <button class="tab-btn" data-tab="leaderboard" aria-controls="view-leaderboard">
+          <i class="fa-solid fa-trophy"></i> <span>Ranks</span>
+        </button>
+        <button class="tab-btn" data-tab="history" aria-controls="view-history">
+          <i class="fa-solid fa-clock-rotate-left"></i> <span>History</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ═════════ MAIN ═════════ -->
+  <main>
+
+    <!-- ─── HOME view ─── -->
+    <section id="view-home" class="view active" aria-label="Accueil">
+      <div class="home-container text-center">
+        <div class="home-hero">
+          <h1 class="hero-title">GAME OF STICK</h1>
+          <h2 class="hero-subtitle">LE CLASSEMENT ULTIME</h2>
+        </div>
+        <p class="home-desc">
+          Le but est de déterminer qui sera le numéro 1 dans un tournoi de Game of Stick avec nos athlètes.<br /><br />
+          Donne le gagnant de chaque duel pour déterminer le classement global !
+        </p>
+        <button id="btn-start" class="btn-start">LET'S GO ! <i class="fa-solid fa-bolt"></i></button>
+      </div>
+    </section>
+
+    <!-- ─── BATTLE view ─── -->
+    <section id="view-battle" class="view" aria-label="Battle">
+
+      <div class="battle-container">
+
+        <div class="battle-prompt text-center" style="margin-bottom: 2rem; text-align: center;">
+          <h3 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 0.8rem;">Qui stickera en premier ? 🥋</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">
+            <i class="fa-solid fa-arrow-left"></i> Swipe <b>Left</b> = Loss &nbsp;&nbsp;|&nbsp;&nbsp;
+            Swipe <b>Right</b> = Win <i class="fa-solid fa-arrow-right"></i>
+          </p>
+        </div>
+
+        <!-- Player cards (rendered by JS) -->
+        <div id="swipe-container">
+          <div id="battle-area" aria-live="polite"></div>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="battle-actions">
+          <div class="vote-btn-row">
+            <button id="btn-left" class="btn btn-vote btn-left" aria-label="Left player wins">
+              <i class="fa-solid fa-arrow-left"></i> Left Wins
+            </button>
+            <button id="btn-draw" class="btn btn-vote btn-draw" aria-label="Draw">
+              <i class="fa-solid fa-scale-balanced"></i> Draw
+            </button>
+            <button id="btn-right" class="btn btn-vote btn-right" aria-label="Right player wins">
+              Right Wins <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+          <button id="btn-skip" class="btn-skip" aria-label="Skip this matchup">
+            Skip matchup <i class="fa-solid fa-forward-step"></i>
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ─── LEADERBOARD view ─── -->
+    <section id="view-leaderboard" class="view" aria-label="Leaderboard">
+      <div class="view-header">
+        <div class="view-title">
+          <h1>Global Rankings</h1>
+          <p class="subtitle">Real-time ELO standings</p>
+        </div>
+        <button id="btn-reset" class="btn-icon-danger" title="Reset all data">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </button>
+      </div>
+
+      <div class="leaderboard-wrapper">
+        <table class="lb-table" aria-label="ELO Leaderboard">
+          <thead>
+            <tr>
+              <th scope="col" class="th-rank">Rank</th>
+              <th scope="col" class="th-player">Competitor</th>
+              <th scope="col" class="th-elo">Rating</th>
+              <th scope="col" class="th-stats desc-hide">W-L-D</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboard-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ─── HISTORY view ─── -->
+    <section id="view-history" class="view" aria-label="Match history">
+      <div class="view-header">
+        <div class="view-title">
+          <h1>Match History</h1>
+          <p class="subtitle">Last 200 confrontations</p>
+        </div>
+      </div>
+      <div class="history-wrapper">
+        <ul id="history-list" aria-label="Recorded matches"></ul>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Confetti container (portal layer) -->
+  <div id="confetti-container" aria-hidden="true"></div>
+
+  <!-- ═════════ SCRIPTS ═════════ -->
+  <script src="js/players.js?v=1.1"></script>
+  <script src="js/elo.js?v=1.1"></script>
+  <script src="js/storage.js?v=1.1"></script>
+  <script src="js/ui.js?v=1.1"></script>
+  <script src="js/app.js?v=1.1"></script>
+
+</body>
+
+</html>
