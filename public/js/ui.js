@@ -24,12 +24,15 @@ function renderAvatar(player) {
 function renderBattleCard(player, side) {
     const enterClass = side === 'left' ? 'anim-enter-left' : 'anim-enter-right';
     return `
-    <div class="battle-card ${enterClass}" id="card-${side}">
+    <div class="battle-card ${enterClass}" id="card-${side}" onclick="handleVote('${side}')">
+      <div class="vote-overlay">
+        <i class="fa-solid fa-check-circle"></i> STICK !
+      </div>
       <div class="avatar-wrap">${renderAvatar(player)}</div>
       
       <div class="player-info">
         <div class="player-ig">
-          ${player.link ? `<a href="${player.link}" target="_blank" rel="noopener noreferrer">${player.instagram}</a>` : (player.instagram || '')}
+          ${player.link ? `<a href="${player.link}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">${player.instagram}</a>` : (player.instagram || '')}
         </div>
         <div class="player-name">${player.name}</div>
         

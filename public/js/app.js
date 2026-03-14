@@ -41,7 +41,12 @@ function renderBattle() {
     setTimeout(() => {
         battleArea.innerHTML = `
       ${renderBattleCard(currentPair.left, 'left')}
-      <div class="vs-divider"><div class="vs-icon">VS</div></div>
+      <div class="vs-divider">
+        <div class="vs-icon">VS</div>
+        <button class="btn btn-draw-center" onclick="handleVote('draw')">
+          <i class="fa-solid fa-scale-balanced"></i> Match Nul
+        </button>
+      </div>
       ${renderBattleCard(currentPair.right, 'right')}
     `;
 
@@ -132,90 +137,7 @@ function handleVote(result) {
     }, 2300);
 }
 
-// ---- Swipe / Drag Logic ---------------------------------------------------
-
-function setupSwipe(cardElement, sideProperty) {
-    if (!cardElement) return;
-
-    let isDragging = false;
-    let startX = 0;
-    let startY = 0;
-    let currentX = 0;
-    let currentY = 0;
-
-    const onPointerDown = (e) => {
-        if (isVoting || (e.pointerType === 'mouse' && e.button !== 0)) return;
-        isDragging = true;
-        startX = e.clientX;
-        startY = e.clientY;
-
-        cardElement.classList.add('dragging');
-        cardElement.setPointerCapture(e.pointerId);
-    };
-
-    const onPointerMove = (e) => {
-        if (!isDragging) return;
-
-        currentX = e.clientX - startX;
-        currentY = e.clientY - startY;
-
-        // Calculate rotation based on X movement
-        const rotate = currentX * 0.05;
-
-        // Apply transform visually
-        cardElement.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${rotate}deg)`;
-    };
-
-    const onPointerUp = (e) => {
-        if (!isDragging) return;
-        isDragging = false;
-        cardElement.classList.remove('dragging');
-        cardElement.releasePointerCapture(e.pointerId);
-
-        const threshold = window.innerWidth * 0.25; // 25% of screen width to swipe
-
-        if (currentX > threshold) {
-            // Swiped Right -> if we dragged the LEFT card right, left wins. If dragged RIGHT card right, right wins.
-            handleVote(sideProperty);
-        } else if (currentX < -threshold) {
-            // Swiped Left
-            handleVote(sideProperty === 'left' ? 'right' : 'left'); // Opponent wins
-        } else if (currentY > threshold) {
-            // Swiped Down -> Draw
-            handleVote('draw');
-        } else {
-            // Return to center
-            cardElement.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-            cardElement.style.transform = 'translate(0px, 0px) rotate(0deg)';
-
-            // Clean up inline styles so CSS animations work again
-            setTimeout(() => {
-                if (!isVoting) {
-                    cardElement.style.transition = '';
-                    cardElement.style.transform = '';
-                }
-            }, 400);
-        }
-
-        currentX = 0;
-        currentY = 0;
-    };
-
-    cardElement.addEventListener('pointerdown', onPointerDown);
-    cardElement.addEventListener('pointermove', onPointerMove);
-    cardElement.addEventListener('pointerup', onPointerUp);
-    cardElement.addEventListener('pointercancel', onPointerUp);
-}
-
-// Hook it into render action
-const originalRenderBattle = renderBattle;
-renderBattle = function () {
-    originalRenderBattle();
-    setTimeout(() => {
-        setupSwipe(document.getElementById('card-left'), 'left');
-        setupSwipe(document.getElementById('card-right'), 'right');
-    }, 250); // wait for DOM to mount
-};
+// (Swipe logic removed per UX update)
 
 // ---- Tab navigation -------------------------------------------------------
 
@@ -273,11 +195,6 @@ function init() {
             if (mainHeader) mainHeader.style.display = 'block';
         });
     }
-
-    // Vote buttons
-    document.getElementById('btn-left').addEventListener('click', () => handleVote('left'));
-    document.getElementById('btn-draw').addEventListener('click', () => handleVote('draw'));
-    document.getElementById('btn-right').addEventListener('click', () => handleVote('right'));
 
     // Skip
     document.getElementById('btn-skip').addEventListener('click', () => renderBattle());

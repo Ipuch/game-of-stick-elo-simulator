@@ -67,13 +67,8 @@
       <div class="battle-container">
 
         <div class="battle-prompt text-center" style="margin-bottom: 2rem; text-align: center;">
-          <h3 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 0.8rem;">Qui stickera en premier ? 🥋</h3>
-          <p style="color: var(--text-muted); font-size: 0.95rem;">
-            <i class="fa-solid fa-arrow-left"></i> Swipe <b>Left</b> = Loss &nbsp;&nbsp;|&nbsp;&nbsp;
-            Swipe <b>Right</b> = Win <i class="fa-solid fa-arrow-right"></i>
-          </p>
+          <h3 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 0.8rem;">Qui stickera en 1er ?</h3>
         </div>
-
         <!-- Player cards (rendered by JS) -->
         <div id="swipe-container">
           <div id="battle-area" aria-live="polite"></div>
@@ -81,17 +76,6 @@
 
         <!-- Action buttons -->
         <div class="battle-actions">
-          <div class="vote-btn-row">
-            <button id="btn-left" class="btn btn-vote btn-left" aria-label="Left player wins">
-              <i class="fa-solid fa-arrow-left"></i> Left Wins
-            </button>
-            <button id="btn-draw" class="btn btn-vote btn-draw" aria-label="Draw">
-              <i class="fa-solid fa-scale-balanced"></i> Draw
-            </button>
-            <button id="btn-right" class="btn btn-vote btn-right" aria-label="Right player wins">
-              Right Wins <i class="fa-solid fa-arrow-right"></i>
-            </button>
-          </div>
           <button id="btn-skip" class="btn-skip" aria-label="Skip this matchup">
             Skip matchup <i class="fa-solid fa-forward-step"></i>
           </button>
