@@ -51,10 +51,10 @@ function renderBattle() {
     `;
 
         // Fade in
-        requestAnimationFrame(() => {
+        setTimeout(() => {
             battleArea.style.opacity = '1';
             battleArea.style.transform = 'scale(1)';
-        });
+        }, 50);
     }, 200);
 }
 
